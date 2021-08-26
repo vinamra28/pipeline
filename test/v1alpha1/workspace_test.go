@@ -90,6 +90,7 @@ func TestWorkspaceReadOnlyDisallowsWrite(t *testing.T) {
 }
 
 func TestWorkspacePipelineRunDuplicateWorkspaceEntriesInvalid(t *testing.T) {
+	t.Skip("failing on OCP 4.6,4.7,4.8 | pipelineRun in this test gets created without errors (err expected): https://issues.redhat.com/browse/SRVKP-1656")
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()

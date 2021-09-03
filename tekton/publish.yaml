@@ -61,7 +61,7 @@ spec:
   steps:
 
   - name: create-ko-yaml
-    image: busybox
+    image: mirror.gcr.io/library/busybox
     script: |
       #!/bin/sh
       set -ex

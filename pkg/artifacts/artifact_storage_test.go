@@ -42,7 +42,7 @@ var (
 		NopImage:                 "override-with-nop:latest",
 		GitImage:                 "override-with-git:latest",
 		KubeconfigWriterImage:    "override-with-kubeconfig-writer:latest",
-		ShellImage:               "busybox",
+		ShellImage:               "mirror.gcr.io/library/busybox",
 		GsutilImage:              "gcr.io/google.com/cloudsdktool/cloud-sdk",
 		PRImage:                  "override-with-pr:latest",
 		ImageDigestExporterImage: "override-with-imagedigest-exporter-image:latest",
@@ -181,7 +181,7 @@ func TestInitializeArtifactStorage(t *testing.T) {
 		expectedArtifactStorage: &storage.ArtifactPVC{
 			Name:                  "pipelineruntest",
 			PersistentVolumeClaim: getPersistentVolumeClaim("10Gi", defaultStorageClass),
-			ShellImage:            "busybox",
+			ShellImage:            "mirror.gcr.io/library/busybox",
 		},
 	}, {
 		desc: "pvc configmap storageclass",
@@ -192,7 +192,7 @@ func TestInitializeArtifactStorage(t *testing.T) {
 		expectedArtifactStorage: &storage.ArtifactPVC{
 			Name:                  "pipelineruntest",
 			PersistentVolumeClaim: getPersistentVolumeClaim("5Gi", &customStorageClass),
-			ShellImage:            "busybox",
+			ShellImage:            "mirror.gcr.io/library/busybox",
 		},
 	}, {
 		desc: "valid bucket",
@@ -209,7 +209,7 @@ func TestInitializeArtifactStorage(t *testing.T) {
 				SecretKey:  "sakey",
 				SecretName: "secret1",
 			}},
-			ShellImage:  "busybox",
+			ShellImage:  "mirror.gcr.io/library/busybox",
 			GsutilImage: "gcr.io/google.com/cloudsdktool/cloud-sdk",
 		},
 	}, {
@@ -223,7 +223,7 @@ func TestInitializeArtifactStorage(t *testing.T) {
 		expectedArtifactStorage: &storage.ArtifactPVC{
 			Name:                  "pipelineruntest",
 			PersistentVolumeClaim: persistentVolumeClaim,
-			ShellImage:            "busybox",
+			ShellImage:            "mirror.gcr.io/library/busybox",
 		},
 	}, {
 		desc: "missing location",
@@ -235,7 +235,7 @@ func TestInitializeArtifactStorage(t *testing.T) {
 		expectedArtifactStorage: &storage.ArtifactPVC{
 			Name:                  "pipelineruntest",
 			PersistentVolumeClaim: persistentVolumeClaim,
-			ShellImage:            "busybox",
+			ShellImage:            "mirror.gcr.io/library/busybox",
 		},
 	}, {
 		desc:          "no config map data",
@@ -244,7 +244,7 @@ func TestInitializeArtifactStorage(t *testing.T) {
 		expectedArtifactStorage: &storage.ArtifactPVC{
 			Name:                  "pipelineruntest",
 			PersistentVolumeClaim: persistentVolumeClaim,
-			ShellImage:            "busybox",
+			ShellImage:            "mirror.gcr.io/library/busybox",
 		},
 	}, {
 		desc: "no secret",
@@ -254,7 +254,7 @@ func TestInitializeArtifactStorage(t *testing.T) {
 		storagetype: "bucket",
 		expectedArtifactStorage: &storage.ArtifactBucket{
 			Location:    "gs://fake-bucket",
-			ShellImage:  "busybox",
+			ShellImage:  "mirror.gcr.io/library/busybox",
 			GsutilImage: "gcr.io/google.com/cloudsdktool/cloud-sdk",
 		},
 	}, {
@@ -268,7 +268,7 @@ func TestInitializeArtifactStorage(t *testing.T) {
 		storagetype: "bucket",
 		expectedArtifactStorage: &storage.ArtifactBucket{
 			Location:    "s3://fake-bucket",
-			ShellImage:  "busybox",
+			ShellImage:  "mirror.gcr.io/library/busybox",
 			GsutilImage: "gcr.io/google.com/cloudsdktool/cloud-sdk",
 			Secrets: []resourcev1alpha1.SecretParam{{
 				FieldName:  "BOTO_CONFIG",
@@ -489,7 +489,7 @@ func TestInitializeArtifactStorageWithoutConfigMap(t *testing.T) {
 	expectedArtifactPVC := &storage.ArtifactPVC{
 		Name:                  "pipelineruntest",
 		PersistentVolumeClaim: persistentVolumeClaim,
-		ShellImage:            "busybox",
+		ShellImage:            "mirror.gcr.io/library/busybox",
 	}
 
 	if d := cmp.Diff(pvc, expectedArtifactPVC, cmpopts.IgnoreUnexported(resource.Quantity{})); d != "" {
@@ -522,7 +522,7 @@ func TestGetArtifactStorageWithConfig(t *testing.T) {
 				SecretKey:  "sakey",
 				SecretName: "secret1",
 			}},
-			ShellImage:  "busybox",
+			ShellImage:  "mirror.gcr.io/library/busybox",
 			GsutilImage: "gcr.io/google.com/cloudsdktool/cloud-sdk",
 		},
 	}, {
@@ -534,7 +534,7 @@ func TestGetArtifactStorageWithConfig(t *testing.T) {
 		},
 		expectedArtifactStorage: &storage.ArtifactPVC{
 			Name:       pipelinerun.Name,
-			ShellImage: "busybox",
+			ShellImage: "mirror.gcr.io/library/busybox",
 		},
 	}, {
 		desc: "missing location",
@@ -544,14 +544,14 @@ func TestGetArtifactStorageWithConfig(t *testing.T) {
 		},
 		expectedArtifactStorage: &storage.ArtifactPVC{
 			Name:       pipelinerun.Name,
-			ShellImage: "busybox",
+			ShellImage: "mirror.gcr.io/library/busybox",
 		},
 	}, {
 		desc:          "no config map data",
 		storageConfig: map[string]string{},
 		expectedArtifactStorage: &storage.ArtifactPVC{
 			Name:       pipelinerun.Name,
-			ShellImage: "busybox",
+			ShellImage: "mirror.gcr.io/library/busybox",
 		},
 	}} {
 		t.Run(c.desc, func(t *testing.T) {
@@ -579,7 +579,7 @@ func TestGetArtifactStorageWithoutConfig(t *testing.T) {
 
 	expectedArtifactPVC := &storage.ArtifactPVC{
 		Name:       "pipelineruntest",
-		ShellImage: "busybox",
+		ShellImage: "mirror.gcr.io/library/busybox",
 	}
 
 	if d := cmp.Diff(pvc, expectedArtifactPVC); d != "" {
@@ -600,7 +600,7 @@ func TestGetArtifactStorageWithPVCConfig(t *testing.T) {
 		},
 		expectedArtifactStorage: &storage.ArtifactPVC{
 			Name:       "pipelineruntest",
-			ShellImage: "busybox",
+			ShellImage: "mirror.gcr.io/library/busybox",
 		},
 	}} {
 		t.Run(c.desc, func(t *testing.T) {

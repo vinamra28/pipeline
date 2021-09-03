@@ -31,7 +31,7 @@ spec:
               description: The workspace to create the readme file in
           steps:
             - name: write-new-stuff
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: 'touch $(workspaces.source.path)/README.md'
       - name: check-file
         params:
@@ -68,7 +68,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: 'echo file exists'
       - name: sample-task-with-array-values
         when:
@@ -88,7 +88,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: exit 1
       - name: task-should-be-skipped-2 # when expression using parameter, evaluates to false
         when:
@@ -98,7 +98,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: exit 1
       - name: task-should-be-skipped-3 # task with when expression and run after
         runAfter:
@@ -110,7 +110,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: exit 1
       - name: task-should-be-skipped-4 # task with when expression using array parameter, evaluates to false
         when:
@@ -131,7 +131,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: exit 1
       - name: finally-task-should-be-skipped-2 # when expression using task result, evaluates to false
         when:
@@ -141,7 +141,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: exit 1
       - name: finally-task-should-be-skipped-3 # when expression using parameter, evaluates to false
         when:
@@ -151,7 +151,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: exit 1
       - name: finally-task-should-be-skipped-4 # when expression using tasks execution status, evaluates to false
         when:
@@ -161,7 +161,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: exit 1
       - name: finally-task-should-be-skipped-5 # when expression using tasks execution status, evaluates to false
         when:
@@ -171,7 +171,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: exit 1
       - name: finally-task-should-be-executed # when expression using execution status, tasks execution status, param, and results
         when:
@@ -190,7 +190,7 @@ spec:
         taskSpec:
           steps:
             - name: echo
-              image: ubuntu
+              image: public.ecr.aws/ubuntu/ubuntu:latest
               script: 'echo finally done'
   params:
     - name: path

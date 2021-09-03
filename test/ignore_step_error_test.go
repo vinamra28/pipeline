@@ -49,7 +49,7 @@ spec:
         steps:
         - name: failing-step
           onError: continue
-          image: busybox
+          image: mirror.gcr.io/library/busybox
           script: 'echo -n 123 | tee $(results.result1.path); exit 1; echo -n 456 | tee $(results.result2.path)'
     - name: task2
       runAfter: [ task1 ]
@@ -64,7 +64,7 @@ spec:
         - name: param2
         steps:
         - name: foo
-          image: busybox
+          image: mirror.gcr.io/library/busybox
           script: 'exit 0'`)
 
 	if _, err := c.PipelineRunClient.Create(ctx, pipelineRun, metav1.CreateOptions{}); err != nil {

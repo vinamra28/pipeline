@@ -1,0 +1,9 @@
+# Do not edit! This file was generated via Makefile
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+
+ENV KO_DATA_PATH=/kodata
+ADD DOLLAR{bin} /ko-app/DOLLAR{bin}
+COPY HEAD DOLLAR{KO_DATA_PATH}/
+COPY refs DOLLAR{KO_DATA_PATH}/
+
+ENTRYPOINT ["/ko-app/${bin}"]

@@ -246,6 +246,8 @@ run_yaml_e2e_tests || failed=1
 
 ((failed)) && dump_cluster_state
 
+breakPoint teardown
+
 teardown
 
 ((failed)) && exit 1

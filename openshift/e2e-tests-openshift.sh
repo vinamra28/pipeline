@@ -58,8 +58,10 @@ function run_go_e2e_tests() {
 }
 
 function run_yaml_e2e_tests() {
+  breakPoint "run_yaml_e2e_tests_alpha"
   run_yaml_e2e_tests_alpha || return 1
 
+  breakPoint "run_yaml_e2e_tests_beta"
   run_yaml_e2e_tests_beta || return 1
 }
 
@@ -240,11 +242,13 @@ create_test_namespace
 
 failed=0
 
-run_go_e2e_tests || failed=1
+# run_go_e2e_tests || failed=1
 
 run_yaml_e2e_tests || failed=1
 
 ((failed)) && dump_cluster_state
+
+breakPoint "teardown"
 
 teardown
 

@@ -172,6 +172,12 @@ rules:
     resources: ["podsecuritypolicies"]
     resourceNames: ["tekton-pipelines"]
     verbs: ["use"]
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["get"]
+    # The webhook configured the namespace as the OwnerRef on various cluster-scoped resources,
+    # which requires we can Get the system namespace.
+    resourceNames: ["tekton-pipelines"]
 
 ---
 # Copyright 2020 The Tekton Authors
@@ -1511,6 +1517,9 @@ data:
   # Setting this flag will determine which gated features are enabled.
   # Acceptable values are "stable" or "alpha".
   enable-api-fields: "stable"
+  # Setting this flag to "true" scopes when expressions to guard a Task only
+  # instead of a Task and its dependent Tasks.
+  scope-when-expressions-to-task: "false"
 
 ---
 # Copyright 2021 The Tekton Authors
@@ -1778,8 +1787,6 @@ spec:
       - name: tekton-pipelines-controller
         image: quay.io/openshift-pipeline/tektoncd-pipeline-controller:nightly
         args: [
-          # Version, to be replace at release time
-          "-version", "nightly",
           # These images are built on-demand by `ko resolve` and are replaced
           # by image references by digest.
           "-kubeconfig-writer-image", "quay.io/openshift-pipeline/tektoncd-pipeline-kubeconfigwriter:nightly",

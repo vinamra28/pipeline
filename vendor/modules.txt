@@ -37,7 +37,7 @@ cloud.google.com/go/kms/internal
 cloud.google.com/go/longrunning
 cloud.google.com/go/longrunning/autogen
 cloud.google.com/go/longrunning/autogen/longrunningpb
-# code.gitea.io/sdk/gitea v0.18.0
+# code.gitea.io/sdk/gitea v0.19.0
 ## explicit; go 1.18
 code.gitea.io/sdk/gitea
 # contrib.go.opencensus.io/exporter/ocagent v0.7.1-0.20200907061046-05415f1de66d
